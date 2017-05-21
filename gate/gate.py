@@ -18,7 +18,7 @@ class Factory():
 		self.best_depth = 0
 		self.error = 1.0
 		self.pool_length = int(math.sqrt(input_dim))
-		self.pool = random.sample(range(input_dim),self.pool_length)
+		self.pool = random.sample(list(range(input_dim)),self.pool_length)
 
 		self.mini_batch = []
 		self.mini_batch_limit = int(math.sqrt(input_dim*self.pool_length))
@@ -69,7 +69,7 @@ class Factory():
 					self.pool.extend(complex_combinations)
 					self.pool.extend(random.sample(combinations,self.pool_length - len(complex_combinations)))
 				for i in range(self.pool_length):
-					self.pool[i] = random.sample(range(len(self.input)),1)[0]
+					self.pool[i] = random.sample(list(range(len(self.input))),1)[0]
 				self.level_counter += 1
 				#print self.pool
 				#print "\n"
@@ -79,18 +79,18 @@ class Factory():
 		if not self.thread:
 			self.thread = threading.Thread(target=self._start)
 			self.thread.start()
-		print "Factory has been started"
+		print("Factory has been started")
 
 	def stop(self):
 		self.stopper = True
 		self.thread = None
-		print "Factory is now stopped"
+		print("Factory is now stopped")
 
 	def load(self,input_arr,output_arr=None):
 		if len(self.input) != len(input_arr):
-			print "Size of the input array: " + str(len(input_arr))
-			print "Size of the input of the factory: " + str(len(self.input))
-			print "These values are not matching! Please fix it and try it again."
+			print("Size of the input array: " + str(len(input_arr)))
+			print("Size of the input of the factory: " + str(len(self.input)))
+			print("These values are not matching! Please fix it and try it again.")
 		else:
 			self.input = input_arr
 		if output_arr is None:
@@ -98,9 +98,9 @@ class Factory():
 			#self.target = []
 		else:
 			if len(self.target) != len(output_arr):
-				print "Size of the output/target array: " + str(len(output_arr))
-				print "Number of the output/target of the factory: " + str(len(self.target))
-				print "These values are not matching! Please fix it and try it again."
+				print("Size of the output/target array: " + str(len(output_arr)))
+				print("Number of the output/target of the factory: " + str(len(self.target)))
+				print("These values are not matching! Please fix it and try it again.")
 			else:
 				#self.target = output_arr
 				self.mini_batch.append([input_arr,output_arr])
@@ -125,7 +125,7 @@ class Factory():
 	    if not isinstance(expr, tuple):
 	        return 0
 	    # this says: return the maximum depth of any sub-expression + 1
-	    return max(map(self.depth, expr)) + 1
+	    return max(list(map(self.depth, expr))) + 1
 
 	#random binary list
 	def rbl(self,n):
@@ -153,7 +153,7 @@ class Factory():
 		with open("factory.tex", "w") as tex_file:
 			tex_file.write(self.tex_content)
 
-		print "TeX dump is generated successfully on " + os.getcwd() + "/factory.tex\n"
+		print("TeX dump is generated successfully on " + os.getcwd() + "/factory.tex\n")
 
 	def logic_parser(self,expression,x,y,gate,fix):
 		if isinstance(expression[0], tuple):
